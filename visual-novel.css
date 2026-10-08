@@ -1,0 +1,383 @@
+/* ==========================================================================
+   SCHOOL CITY - VISUAL-NOVEL.CSS (Motor de Novela Visual 2D y Capas de Sprites)
+   Fondos temáticos ilustrados de alta fidelidad, cajas de texto y slots de personajes.
+   ========================================================================== */
+
+/* Escenario y Telón de Fondo con Movimiento Continuo */
+.vn-backdrop {
+  position: absolute;
+  inset: -15px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.6s ease, filter 0.5s ease;
+  animation: vnBackdropFloat 18s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes vnBackdropFloat {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.025) translate(-8px, -4px); }
+  100% { transform: scale(1.015) translate(6px, -6px); }
+}
+
+/* ==========================================================================
+   FONDOS TEMÁTICOS ILUSTRADOS DISTINTOS (ESCENARIOS DE NOVELA VISUAL)
+   ========================================================================== */
+
+/* 1. ENTRADA DE SCHOOL CITY (Portón de la Academia al Atardecer) */
+.bg-school-entrance {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%230f172a'/%3E%3Cstop offset='45%25' stop-color='%2331103f'/%3E%3Cstop offset='80%25' stop-color='%23c2410c'/%3E%3Cstop offset='100%25' stop-color='%23fbbf24'/%3E%3C/linearGradient%3E%3CradialGradient id='sun' cx='50%25' cy='75%25' r='30%25'%3E%3Cstop offset='0%25' stop-color='%23fef08a' stop-opacity='0.9'/%3E%3Cstop offset='60%25' stop-color='%23f97316' stop-opacity='0.4'/%3E%3Cstop offset='100%25' stop-color='%23f97316' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='url(%23sky)'/%3E%3Ccircle cx='640' cy='520' r='220' fill='url(%23sun)'/%3E%3C!-- Silueta Torre de Reloj Campus --%3E%3Cpath d='M580 540 L580 320 L610 260 L610 180 L640 120 L670 180 L670 260 L700 320 L700 540 Z' fill='%231e1b4b' opacity='0.85'/%3E%3Ccircle cx='640' cy='230' r='20' fill='%23fef08a' opacity='0.9'/%3E%3C!-- Columnas y Portón Forjado --%3E%3Crect x='160' y='320' width='80' height='360' fill='%23090d16'/%3E%3Crect x='150' y='300' width='100' height='25' fill='%231e293b'/%3E%3Cpolygon points='160,300 200,250 240,300' fill='%23090d16'/%3E%3Ccircle cx='200' cy='380' r='18' fill='%23fef08a' opacity='0.85'/%3E%3Crect x='1040' y='320' width='80' height='360' fill='%23090d16'/%3E%3Crect x='1030' y='300' width='100' height='25' fill='%231e293b'/%3E%3Cpolygon points='1040,300 1080,250 1120,300' fill='%23090d16'/%3E%3Ccircle cx='1080' cy='380' r='18' fill='%23fef08a' opacity='0.85'/%3E%3C!-- Rejas forjadas góticas --%3E%3Cpath d='M240 400 Q640 320 1040 400 L1040 680 L240 680 Z' fill='none' stroke='%231e293b' stroke-width='6'/%3E%3Cline x1='340' y1='360' x2='340' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3Cline x1='440' y1='340' x2='440' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3Cline x1='540' y1='330' x2='540' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3Cline x1='740' y1='330' x2='740' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3Cline x1='840' y1='340' x2='840' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3Cline x1='940' y1='360' x2='940' y2='680' stroke='%230f172a' stroke-width='4'/%3E%3C!-- Suelo de adoquines --%3E%3Crect x='0' y='640' width='1280' height='80' fill='%23090d16'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #090e21 0%, #151b3b 100%);
+}
+
+/* 2. AULA MAGNA - ESCUELA MAYOR (Pizarra de Fórmulas y Ventanales de Luz) */
+.bg-classroom {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3ClinearGradient id='sunbeam' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23fef08a' stop-opacity='0.25'/%3E%3Cstop offset='100%25' stop-color='%23fef08a' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3C!-- Pared de aula --%3E%3Crect width='1280' height='720' fill='%23131c2e'/%3E%3Crect x='0' y='520' width='1280' height='200' fill='%23271c19'/%3E%3C!-- Gran Pizarra Verde con Fórmulas --%3E%3Crect x='280' y='80' width='720' height='360' rx='10' fill='%23143823' stroke='%23854d0e' stroke-width='14'/%3E%3Ctext x='320' y='140' font-family='monospace' font-size='26' fill='%23ffffff' opacity='0.75'%3EF = m · a %26emsp;%26emsp; E = mc²%3C/text%3E%3Ctext x='320' y='200' font-family='monospace' font-size='22' fill='%23fef08a' opacity='0.8'%3E∫ f(x)dx = F(x) + C%3C/text%3E%3Ctext x='320' y='260' font-family='monospace' font-size='20' fill='%2367e8f9' opacity='0.75'%3Ea² + b² = c²  (Teorema de Pitágoras)%3C/text%3E%3Ctext x='320' y='320' font-family='monospace' font-size='22' fill='%23f472b6' opacity='0.8'%3E6CO2 + 6H2O ➔ C6H12O6 + 6O2%3C/text%3E%3Ctext x='320' y='380' font-family='monospace' font-size='20' fill='%23cbd5e1' opacity='0.7'%3ESCHOOL CITY: Academia Metropolitana de Ciencias%3C/text%3E%3C!-- Ventanal izquierdo con haz de luz solar --%3E%3Cpolygon points='0,0 200,0 200,500 0,500' fill='%2338bdf8' opacity='0.2'/%3E%3Cpolygon points='200,0 650,720 300,720 0,200' fill='url(%23sunbeam)'/%3E%3C!-- Mesas de estudiantes en primer plano --%3E%3Crect x='100' y='580' width='320' height='120' rx='6' fill='%23451a03' stroke='%2378350f' stroke-width='4'/%3E%3Crect x='860' y='580' width='320' height='120' rx='6' fill='%23451a03' stroke='%2378350f' stroke-width='4'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #0d1527 0%, #080c16 100%);
+}
+
+/* 3. LABORATORIO DE CIENCIAS (Matraces, Tabla Periódica y Neón Quantum) */
+.bg-lab {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3CradialGradient id='flaskGlow' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%2300f0ff' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%2300f0ff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='%2305141c'/%3E%3C!-- Muro con Holograma de Tabla Periódica --%3E%3Crect x='340' y='60' width='600' height='280' rx='12' fill='%23082f49' stroke='%2300f0ff' stroke-width='2' opacity='0.4' stroke-dasharray='6,4'/%3E%3Ctext x='640' y='110' font-family='sans-serif' font-size='22' font-weight='bold' fill='%2300f0ff' text-anchor='middle'%3EREACTOR QUÁNTICO %26 TABLA PERIÓDICA%3C/text%3E%3Cg opacity='0.7' fill='%230284c7'%3E%3Crect x='380' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='402' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3EH%3C/text%3E%3Crect x='440' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='462' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3EHe%3C/text%3E%3Crect x='500' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='522' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3ELi%3C/text%3E%3Crect x='560' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='582' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3Crect x='620' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='642' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3EN%3C/text%3E%3Crect x='680' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='702' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3Crect x='740' y='140' width='45' height='45' rx='4'/%3E%3Ctext x='762' y='168' font-size='16' fill='%23fff' text-anchor='middle'%3ENa%3C/text%3E%3Crect x='800' y='140' width='45' height='45' rx='4' fill='%23eab308'/%3E%3Ctext x='822' y='168' font-size='16' fill='%23000' text-anchor='middle'%3EAu%3C/text%3E%3C/g%3E%3C!-- Mesadas con Matraces de Química Iluminados --%3E%3Crect x='0' y='520' width='1280' height='200' fill='%230f172a' stroke='%2300f0ff' stroke-width='2'/%3E%3Ccircle cx='180' cy='460' r='50' fill='url(%23flaskGlow)'/%3E%3Cpath d='M170 380 L190 380 L190 420 L210 470 C215 485 200 490 180 490 C160 490 145 485 150 470 L170 420 Z' fill='%2306d6a0' opacity='0.85' stroke='%2367e8f9' stroke-width='3'/%3E%3Ccircle cx='1080' cy='450' r='50' fill='url(%23flaskGlow)'/%3E%3Cpath d='M1070 370 L1090 370 L1090 410 L1110 460 C1115 475 1100 480 1080 480 C1060 480 1045 475 1050 460 L1070 410 Z' fill='%23a855f7' opacity='0.85' stroke='%23c084fc' stroke-width='3'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #021217 0%, #01060a 100%);
+}
+
+/* 4. BIBLIOTECA CENTRAL (Estanterías Góticas de Caoba y Rosetón) */
+.bg-library {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3CradialGradient id='roseLight' cx='50%25' cy='30%25' r='40%25'%3E%3Cstop offset='0%25' stop-color='%23fef08a' stop-opacity='0.45'/%3E%3Cstop offset='100%25' stop-color='%2378350f' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='%231c120c'/%3E%3Ccircle cx='640' cy='220' r='160' fill='url(%23roseLight)'/%3E%3C!-- Rosetón Central de Vidrieras --%3E%3Ccircle cx='640' cy='180' r='90' fill='none' stroke='%23d97706' stroke-width='8'/%3E%3Ccircle cx='640' cy='180' r='40' fill='%23991b1b' opacity='0.7'/%3E%3C!-- Estanterías Masivas de Libros a los lados --%3E%3Crect x='60' y='60' width='260' height='580' fill='%2327170e' stroke='%2378350f' stroke-width='8'/%3E%3Cline x1='60' y1='180' x2='320' y2='180' stroke='%2378350f' stroke-width='6'/%3E%3Cline x1='60' y1='300' x2='320' y2='300' stroke='%2378350f' stroke-width='6'/%3E%3Cline x1='60' y1='420' x2='320' y2='420' stroke='%2378350f' stroke-width='6'/%3E%3C!-- Libros de colores --%3E%3Crect x='80' y='190' width='18' height='105' fill='%23991b1b'/%3E%3Crect x='100' y='200' width='22' height='95' fill='%231e3a8a'/%3E%3Crect x='124' y='185' width='16' height='110' fill='%23065f46'/%3E%3Crect x='142' y='195' width='25' height='100' fill='%23b45309'/%3E%3Crect x='960' y='60' width='260' height='580' fill='%2327170e' stroke='%2378350f' stroke-width='8'/%3E%3Cline x1='960' y1='180' x2='1220' y2='180' stroke='%2378350f' stroke-width='6'/%3E%3Cline x1='960' y1='300' x2='1220' y2='300' stroke='%2378350f' stroke-width='6'/%3E%3Cline x1='960' y1='420' x2='1220' y2='420' stroke='%2378350f' stroke-width='6'/%3E%3Crect x='980' y='190' width='20' height='105' fill='%23b45309'/%3E%3Crect x='1002' y='195' width='24' height='100' fill='%234c1d95'/%3E%3Crect x='1028' y='185' width='18' height='110' fill='%231e3a8a'/%3E%3C!-- Suelo de parquet pulido --%3E%3Crect x='0' y='620' width='1280' height='100' fill='%23170e08'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #180e08 0%, #0a0503 100%);
+}
+
+/* 5. MUSEO UNIVERSAL (Columnas Clásicas y Sarcófago Dorado) */
+.bg-museum {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3ClinearGradient id='marble' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23e2e8f0'/%3E%3Cstop offset='50%25' stop-color='%23cbd5e1'/%3E%3Cstop offset='100%25' stop-color='%2394a3b8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='%231e1329'/%3E%3C!-- Columnas de Mármol con Capiteles --%3E%3Crect x='120' y='0' width='70' height='620' fill='url(%23marble)' stroke='%2364748b' stroke-width='2'/%3E%3Crect x='105' y='600' width='100' height='30' fill='%2394a3b8'/%3E%3Crect x='1080' y='0' width='70' height='620' fill='url(%23marble)' stroke='%2364748b' stroke-width='2'/%3E%3Crect x='1065' y='600' width='100' height='30' fill='%2394a3b8'/%3E%3C!-- Estandarte Púrpura de Historia --%3E%3Cpolygon points='600,0 680,0 680,240 640,280 600,240' fill='%23581c87' stroke='%23fbbf24' stroke-width='4'/%3E%3Ccircle cx='640' cy='120' r='24' fill='%23fbbf24'/%3E%3Ctext x='640' y='128' font-family='serif' font-size='26' font-weight='bold' fill='%23581c87' text-anchor='middle'%3EΩ%3C/text%3E%3C!-- Vitrina Central con Sarcófago Dorado y Vasijas Griegas --%3E%3Crect x='480' y='360' width='320' height='260' rx='8' fill='%230f172a' stroke='%239333ea' stroke-width='3' opacity='0.85'/%3E%3Cpath d='M620 400 Q640 380 660 400 L650 560 L630 560 Z' fill='%23fbbf24' stroke='%23b45309' stroke-width='3'/%3E%3Ccircle cx='640' cy='420' r='14' fill='%2338bdf8'/%3E%3C!-- Ánfora Griega --%3E%3Cellipse cx='360' cy='520' rx='28' ry='42' fill='%23ea580c' stroke='%237c2d12' stroke-width='3'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #180d22 0%, #09030e 100%);
+}
+
+/* 6. TIENDA DE MATEMÁTICAS & FINANZAS (Bazar con Pizarra de Geometría y Ábacos) */
+.bg-math-shop {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%231f1638'/%3E%3C!-- Pizarra con Espiral Áurea y Geometría --%3E%3Crect x='320' y='80' width='640' height='320' rx='8' fill='%230f172a' stroke='%23f59e0b' stroke-width='8'/%3E%3Ctext x='640' y='130' font-family='sans-serif' font-size='22' font-weight='bold' fill='%23fbbf24' text-anchor='middle'%3EBAZAR FINANCIERO %26 RATIO ÁUREO (Φ)%3C/text%3E%3C!-- Espiral de Fibonacci --%3E%3Cpath d='M600 240 A20 20 0 0 1 620 260 A40 40 0 0 1 580 300 A80 80 0 0 1 500 220 A120 120 0 0 1 620 100' fill='none' stroke='%2338bdf8' stroke-width='3'/%3E%3Ctext x='740' y='220' font-family='monospace' font-size='20' fill='%2334d399'%3E$ = P · (1 + r)^t%3C/text%3E%3Ctext x='740' y='270' font-family='monospace' font-size='20' fill='%23f472b6'%3E%25 Descuento = P · (1 - d)%3C/text%3E%3C!-- Estantes de cuadernos y ábacos --%3E%3Crect x='60' y='120' width='200' height='460' fill='%23451a03' stroke='%23b45309' stroke-width='4'/%3E%3Cline x1='80' y1='220' x2='240' y2='220' stroke='%23d97706' stroke-width='3'/%3E%3Ccircle cx='100' cy='220' r='8' fill='%23ef4444'/%3E%3Ccircle cx='125' cy='220' r='8' fill='%233b82f6'/%3E%3Ccircle cx='150' cy='220' r='8' fill='%2310b981'/%3E%3C!-- Mostrador de Madame Decimal --%3E%3Crect x='0' y='540' width='1280' height='180' fill='%23291509' stroke='%23f59e0b' stroke-width='3'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #170f2b 0%, #07030e 100%);
+}
+
+/* 7. PARQUE CENTRAL (Cerezos en Flor, Lago y Pérgola Verde) */
+.bg-park {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3ClinearGradient id='parkSky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='60%25' stop-color='%23bae6fd'/%3E%3Cstop offset='100%25' stop-color='%23dcfce7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='url(%23parkSky)'/%3E%3C!-- Colinas de césped --%3E%3Cellipse cx='640' cy='780' rx='900' ry='360' fill='%2315803d'/%3E%3Cellipse cx='200' cy='620' rx='500' ry='220' fill='%2316a34a'/%3E%3Cellipse cx='1080' cy='620' rx='500' ry='220' fill='%2316a34a'/%3E%3C!-- Árbol Cerezo en Flor Izquierda --%3E%3Cpath d='M140 600 Q160 440 200 360 Q230 440 250 600 Z' fill='%23451a03'/%3E%3Ccircle cx='180' cy='320' r='100' fill='%23f472b6' opacity='0.85'/%3E%3Ccircle cx='250' cy='300' r='85' fill='%23fb7185' opacity='0.85'/%3E%3Ccircle cx='130' cy='280' r='75' fill='%23fbcfe8' opacity='0.9'/%3E%3C!-- Árbol Derecho --%3E%3Cpath d='M1040 600 Q1060 440 1100 360 Q1130 440 1150 600 Z' fill='%23451a03'/%3E%3Ccircle cx='1080' cy='320' r='110' fill='%2322c55e' opacity='0.9'/%3E%3Ccircle cx='1150' cy='300' r='85' fill='%2315803d' opacity='0.9'/%3E%3C!-- Estanque Azul con Nenúfares --%3E%3Cellipse cx='640' cy='580' rx='280' ry='70' fill='%230284c7' stroke='%2338bdf8' stroke-width='3'/%3E%3Cellipse cx='600' cy='575' rx='16' ry='8' fill='%2322c55e'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #092e1e 0%, #03140c 100%);
+}
+
+/* 8. CENTRO DE VIAJES (Terminal de Vuelo con Mapamundi Panorámico) */
+.bg-travel {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%230a192f'/%3E%3C!-- Gran Ventanal Panorámico con Pistas de Vuelo --%3E%3Crect x='80' y='60' width='1120' height='420' rx='14' fill='%230f2942' stroke='%230284c7' stroke-width='6'/%3E%3Cline x1='80' y1='270' x2='1200' y2='270' stroke='%230284c7' stroke-width='3' stroke-dasharray='12,6'/%3E%3C!-- Mapamundi Vectorial Iluminado en el fondo --%3E%3Cpath d='M250 200 Q290 170 330 220 Q350 280 290 320 Q240 260 250 200 Z' fill='%2300f0ff' opacity='0.4'/%3E%3Cpath d='M300 340 Q340 330 360 410 Q320 460 290 380 Z' fill='%2300f0ff' opacity='0.4'/%3E%3Cpath d='M580 180 Q640 160 670 230 Q630 280 580 230 Z' fill='%2300f0ff' opacity='0.4'/%3E%3Cpath d='M580 260 Q660 280 650 380 Q590 410 570 320 Z' fill='%2300f0ff' opacity='0.4'/%3E%3Cpath d='M700 170 Q860 160 880 280 Q800 360 700 240 Z' fill='%2300f0ff' opacity='0.4'/%3E%3Cpath d='M850 340 Q910 330 920 390 Q870 410 850 360 Z' fill='%2300f0ff' opacity='0.4'/%3E%3C!-- Tablero de Vuelos Flip Board --%3E%3Crect x='440' y='90' width='400' height='70' rx='6' fill='%23020617' stroke='%23eab308' stroke-width='2'/%3E%3Ctext x='460' y='120' font-family='monospace' font-size='16' fill='%23eab308'%3EDEPARTURES: TOKIO • CANBERRA • PARÍS%3C/text%3E%3Ctext x='460' y='145' font-family='monospace' font-size='14' fill='%2322c55e'%3EEXPEDICIÓN SCHOOL CITY: ON TIME ➔ GATE 01%3C/text%3E%3C!-- Suelo de baldosas con Rosa de los Vientos --%3E%3Crect x='0' y='520' width='1280' height='200' fill='%23081b29' stroke='%230284c7' stroke-width='3'/%3E%3Ccircle cx='640' cy='620' r='55' fill='none' stroke='%23eab308' stroke-width='3' stroke-dasharray='8,4'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #071927 0%, #02090f 100%);
+}
+
+/* 9. ARENA DE RETOS (Estadio Cyber con Reflectores y Gradas Holográficas) */
+.bg-arena {
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Cdefs%3E%3ClinearGradient id='laser1' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23ef4444' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%23ef4444' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='laser2' x1='1' y1='1' x2='0' y2='0'%3E%3Cstop offset='0%25' stop-color='%2306b6d4' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%2306b6d4' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1280' height='720' fill='%2318040a'/%3E%3C!-- Focos cruzados de Estadio --%3E%3Cpolygon points='0,720 180,720 750,0 650,0' fill='url(%23laser1)'/%3E%3Cpolygon points='1280,720 1100,720 530,0 630,0' fill='url(%23laser2)'/%3E%3C!-- Marcador Holográfico Gigante --%3E%3Crect x='440' y='60' width='400' height='130' rx='10' fill='%230f172a' stroke='%23ef4444' stroke-width='4'/%3E%3Ctext x='640' y='110' font-family='Impact' font-size='32' fill='%23ef4444' text-anchor='middle' letter-spacing='2'%3EARENA DE RETOS ⚡%3C/text%3E%3Ctext x='640' y='155' font-family='monospace' font-size='22' font-weight='bold' fill='%23fef08a' text-anchor='middle'%3EMULTIPLICADOR XP: x2.5%3C/text%3E%3C!-- Gradas y valla hexagonal luminosa --%3E%3Crect x='0' y='520' width='1280' height='200' fill='%232b0712' stroke='%23f43f5e' stroke-width='4'/%3E%3Cpath d='M0 550 L1280 550 M0 600 L1280 600' stroke='%23f43f5e' stroke-width='2' stroke-dasharray='16,8'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #2b0610 0%, #0d0104 100%);
+}
+
+.vn-ambient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(5, 8, 15, 0.5) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Escenario de Sprites 2D con Profundidad */
+.vn-sprites-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 40px 150px 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.vn-character-slot {
+  position: absolute;
+  bottom: 120px;
+  width: 290px;
+  height: 440px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: brightness(0.65) contrast(0.95);
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+}
+
+.vn-character-slot.slot-left {
+  left: 8%;
+}
+
+.vn-character-slot.slot-center {
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95);
+}
+
+.vn-character-slot.slot-right {
+  right: 8%;
+}
+
+.vn-character-slot.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.vn-character-slot.slot-center.active {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.vn-character-slot.speaking {
+  filter: brightness(1.05) contrast(1.05);
+  transform: translateY(-8px) scale(1.03);
+  z-index: 8;
+}
+
+.vn-character-slot.slot-center.speaking {
+  transform: translateX(-50%) translateY(-8px) scale(1.03);
+}
+
+/* Barra superior de VN */
+.vn-top-bar {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.vn-scene-title {
+  background: rgba(8, 14, 28, 0.85);
+  border: 1px solid var(--border-glass);
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  backdrop-filter: blur(8px);
+}
+
+.vn-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-vn-tool {
+  background: rgba(8, 14, 28, 0.85);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.btn-vn-tool:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+
+.btn-vn-tool.active {
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+/* Caja de Diálogo Estilizada (Visual Novel Textbox) */
+.vn-dialogue-box {
+  position: absolute;
+  bottom: 18px;
+  left: 36px;
+  right: 36px;
+  min-height: 145px;
+  max-height: 185px;
+  background: rgba(10, 16, 32, 0.94);
+  border: 1.5px solid rgba(0, 240, 255, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(0, 240, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 22px 28px 20px 28px;
+  z-index: 25;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Placa con el nombre del personaje */
+.vn-speaker-plate {
+  position: absolute;
+  top: -18px;
+  left: 28px;
+  background: linear-gradient(135deg, #132247 0%, #0d162d 100%);
+  border: 1.5px solid var(--accent-cyan);
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 5px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.speaker-icon {
+  font-size: 1.1rem;
+}
+
+.speaker-text {
+  letter-spacing: 0.5px;
+}
+
+.vn-text-body {
+  flex: 1;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: #f1f5f9;
+  letter-spacing: 0.2px;
+  display: inline;
+}
+
+.vn-cursor {
+  display: inline-block;
+  width: 9px;
+  height: 18px;
+  background-color: var(--accent-cyan);
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.vn-cursor.blink {
+  animation: cursor-blink 0.8s infinite;
+}
+
+.vn-continue-indicator {
+  position: absolute;
+  bottom: 12px;
+  right: 22px;
+  font-size: 1rem;
+  color: var(--accent-gold);
+  animation: arrow-bounce 1s infinite alternate;
+}
+
+/* ==========================================================================
+   RAMIFICACIÓN DE DECISIONES (CHOICES ENGINE)
+   ========================================================================== */
+.vn-choices-container {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 90%;
+  max-width: 620px;
+  z-index: 35;
+  pointer-events: auto;
+}
+
+.vn-choice-btn {
+  background: rgba(14, 24, 48, 0.95);
+  border: 1.5px solid var(--border-glass);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  padding: 14px 22px;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-fast);
+  animation: choice-slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.vn-choice-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--accent-cyan);
+  transform: translateX(8px);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+}
+
+.vn-choice-btn:active {
+  transform: scale(0.98);
+}
+
+.choice-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.choice-icon {
+  font-size: 1.2rem;
+}
+
+.choice-tag {
+  font-size: 0.75rem;
+  background: rgba(255, 209, 102, 0.2);
+  color: var(--accent-gold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   RENDERIZADOR EN CAPAS DEL AVATAR (SVG VECTORIAL DINÁMICO)
+   ========================================================================== */
+.avatar-svg-container svg, .pet-svg-container svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+}
+
+.avatar-layer {
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+/* Animaciones específicas de Novela Visual */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes arrow-bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(6px); }
+}
+
+@keyframes choice-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

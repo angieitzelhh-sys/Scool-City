@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SCHOOL CITY - Visual Novel Educativa 2D</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/visual-novel.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+  <div id="game-app">
+    <!-- CONTENEDOR PRINCIPAL DEL JUEGO CON RELACIÓN 16:9 -->
+    <div id="game-container">
+
+      <!-- ========================================== -->
+      <!-- PANTALLA 1: PANTALLA DE INICIO (Title Screen) -->
+      <!-- ========================================== -->
+      <section id="screen-title" class="game-screen active">
+        <div class="title-bg-parallax">
+          <div class="sky-layer"></div>
+          <div class="stars-layer"></div>
+          <div class="city-skyline-back"></div>
+          <div class="city-skyline-mid"></div>
+          <div class="city-skyline-front"></div>
+          <div class="particle-overlay" id="title-particles"></div>
+        </div>
+        <div class="title-content">
+          <div class="title-badge animate-float">🏫 ACADEMIA METROPOLITANA</div>
+          <h1 class="game-logo">
+            <span class="logo-school">SCHOOL</span>
+            <span class="logo-city">CITY</span>
+            <span class="logo-sub">AVENTURA EDUCATIVA 2D</span>
+          </h1>
+          <p class="title-tagline">Explora la metrópolis del conocimiento, resuelve enigmas y conviértete en leyenda académica.</p>
+          
+          <div class="title-buttons">
+            <button id="btn-title-play" class="btn btn-primary btn-large glow-effect">
+              <span class="btn-icon">▶</span>
+              <span class="btn-label" id="label-title-play">JUGAR</span>
+            </button>
+            <button id="btn-title-options" class="btn btn-secondary btn-large">
+              <span class="btn-icon">⚙️</span>
+              <span class="btn-label">OPCIONES</span>
+            </button>
+          </div>
+          <div class="title-footer">
+            <span>Versión 2.0 • Vanilla JS Architecture • 100% Offline Compatible</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PANTALLA 2: AUTH SCREEN (Crear / Iniciar Sesión) -->
+      <!-- ========================================== -->
+      <section id="screen-auth" class="game-screen">
+        <div class="auth-backdrop"></div>
+        <div class="glass-card auth-card animate-zoom-in">
+          <div class="auth-header">
+            <div class="auth-icon-badge">🎓</div>
+            <h2>REGISTRO DE ESTUDIANTE</h2>
+            <p>Ingresa a tu expediente académico de School City</p>
+          </div>
+          
+          <div class="auth-tabs">
+            <button id="tab-login" class="auth-tab-btn active">Iniciar Sesión</button>
+            <button id="tab-register" class="auth-tab-btn">Crear Cuenta</button>
+          </div>
+
+          <form id="auth-form" onsubmit="return false;">
+            <div class="form-group">
+              <label for="auth-username">Nombre de Estudiante / Usuario</label>
+              <div class="input-wrapper">
+                <span class="input-icon">👤</span>
+                <input type="text" id="auth-username" placeholder="Ej. Alex Vance" maxlength="18" required autocomplete="off">
+              </div>
+            </div>
+
+            <div class="auth-actions">
+              <button id="btn-auth-submit" class="btn btn-primary btn-block glow-effect">
+                <span id="auth-submit-label">ENTRAR A CLASE</span>
+              </button>
+              <div class="auth-divider"><span>O BIEN</span></div>
+              <button id="btn-auth-guest" class="btn btn-tertiary btn-block">
+                <span>🚀 ENTRAR COMO INVITADO (Guest)</span>
+              </button>
+            </div>
+          </form>
+
+          <button id="btn-auth-back" class="btn-text">← Volver al Menú Principal</button>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PANTALLA 3: CREADOR DE AVATAR AVANZADO -->
+      <!-- ========================================== -->
+      <section id="screen-avatar" class="game-screen">
+        <div class="avatar-creator-layout">
+          <!-- Vista previa en vivo con luz cenital -->
+          <div class="avatar-preview-container">
+            <div class="spotlight"></div>
+            <div class="pedestal"></div>
+            <div class="avatar-canvas-wrapper" id="avatar-preview-stage">
+              <!-- Renderizado SVG dinámico en capas -->
+              <div id="avatar-render-target" class="avatar-svg-container animate-breathe"></div>
+              <div id="pet-render-target" class="pet-svg-container animate-float"></div>
+            </div>
+            <div class="avatar-name-badge">
+              <span id="preview-student-name">Alex</span>
+              <span class="badge-role">Estudiante Novato</span>
+            </div>
+          </div>
+
+          <!-- Panel de personalización avanzada -->
+          <div class="avatar-controls-panel glass-card">
+            <div class="panel-header">
+              <h2>🎨 CREADOR DE AVATAR</h2>
+              <p>Personaliza cada capa de tu personaje para School City</p>
+            </div>
+
+            <!-- Entrada de nombre -->
+            <div class="form-group name-input-box">
+              <label for="avatar-input-name">Nombre de tu Estudiante</label>
+              <input type="text" id="avatar-input-name" value="Alex" maxlength="16" placeholder="Escribe tu nombre">
+            </div>
+
+            <!-- Pestañas de categorías de personalización -->
+            <div class="avatar-category-nav">
+              <button class="avatar-cat-btn active" data-cat="skin">Piel</button>
+              <button class="avatar-cat-btn" data-cat="hair">Cabello</button>
+              <button class="avatar-cat-btn" data-cat="eyes">Expresión</button>
+              <button class="avatar-cat-btn" data-cat="top">Ropa Sup.</button>
+              <button class="avatar-cat-btn" data-cat="bottom">Ropa Inf.</button>
+              <button class="avatar-cat-btn" data-cat="shoes">Calzado</button>
+              <button class="avatar-cat-btn" data-cat="accessory">Accesorio</button>
+              <button class="avatar-cat-btn" data-cat="pet">Mascota</button>
+            </div>
+
+            <!-- Contenedor dinámico de opciones de la categoría activa -->
+            <div class="avatar-options-body" id="avatar-options-container">
+              <!-- Inyectado dinámicamente por player.js -->
+            </div>
+
+            <!-- Botón de confirmación -->
+            <div class="avatar-footer-actions">
+              <button id="btn-avatar-random" class="btn btn-secondary">🎲 Aleatorio</button>
+              <button id="btn-avatar-confirm" class="btn btn-primary glow-effect">
+                <span>CONFIRMAR Y GUARDAR ➔</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PANTALLA 4 & NUBES DE NOVELA: VISUAL NOVEL STAGE -->
+      <!-- ========================================== -->
+      <section id="screen-vn" class="game-screen">
+        <!-- Fondo de escenario de novela visual -->
+        <div id="vn-stage-background" class="vn-backdrop bg-school-entrance"></div>
+        <div class="vn-ambient-overlay"></div>
+
+        <!-- Escenario de sprites con capas de profundidad -->
+        <div class="vn-sprites-stage" id="vn-character-stage">
+          <div id="vn-sprite-left" class="vn-character-slot slot-left"></div>
+          <div id="vn-sprite-center" class="vn-character-slot slot-center"></div>
+          <div id="vn-sprite-right" class="vn-character-slot slot-right"></div>
+        </div>
+
+        <!-- Barra superior rápida de Visual Novel -->
+        <div class="vn-top-bar">
+          <div class="vn-scene-title" id="vn-location-title">Entrada de School City</div>
+          <div class="vn-controls">
+            <button id="btn-vn-log" class="btn-vn-tool" title="Historial de Diálogos">📜 Historial</button>
+            <button id="btn-vn-auto" class="btn-vn-tool" title="Reproducción Automática">⏩ Auto</button>
+            <button id="btn-vn-skip" class="btn-vn-tool" title="Omitir Diálogo">⏭ Omitir</button>
+          </div>
+        </div>
+
+        <!-- Caja de Diálogo Estilizada -->
+        <div class="vn-dialogue-box animate-slide-up" id="vn-textbox">
+          <div class="vn-speaker-plate" id="vn-speaker-name">
+            <span class="speaker-icon" id="vn-speaker-icon">🎓</span>
+            <span class="speaker-text" id="vn-speaker-text">Prof. Luna</span>
+          </div>
+
+          <div class="vn-text-body">
+            <p id="vn-text-content" class="vn-typewriter-text"></p>
+            <span class="vn-cursor blink"></span>
+          </div>
+
+          <!-- Indicador de pulsar para continuar -->
+          <div class="vn-continue-indicator" id="vn-continue-arrow">▼</div>
+
+          <!-- Contenedor dinámico de opciones de decisión -->
+          <div class="vn-choices-container" id="vn-choices-wrapper"></div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PANTALLA 5: MAPA GENERAL DE LA CIUDAD (Main Hub) -->
+      <!-- ========================================== -->
+      <section id="screen-map" class="game-screen">
+        <!-- HUD SUPERIOR -->
+        <header class="map-hud glass-card">
+          <div class="hud-player-profile" id="hud-profile-trigger">
+            <div class="hud-avatar-thumb" id="hud-avatar-preview"></div>
+            <div class="hud-player-info">
+              <div class="hud-name-row">
+                <span class="hud-player-name" id="hud-player-name">Alex</span>
+                <span class="hud-level-badge" id="hud-player-level">Nv. 1</span>
+              </div>
+              <div class="hud-xp-bar-container">
+                <div class="hud-xp-bar-fill" id="hud-xp-fill" style="width: 15%;"></div>
+                <span class="hud-xp-text" id="hud-xp-text">15 / 100 XP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud-currencies">
+            <div class="hud-currency-chip currency-coins" title="Monedas Académicas">
+              <span class="chip-icon">🪙</span>
+              <span class="chip-val" id="hud-coins">1,250</span>
+            </div>
+            <div class="hud-currency-chip currency-gems" title="Gemas de Conocimiento">
+              <span class="chip-icon">💎</span>
+              <span class="chip-val" id="hud-gems">320</span>
+            </div>
+          </div>
+
+          <div class="hud-quick-actions">
+            <button id="btn-quick-settings" class="btn-circle" title="Ajustes">⚙️</button>
+          </div>
+        </header>
+
+        <!-- MAPA 2D INTERACTIVO CON 8 NODOS EDUCATIVOS -->
+        <div class="city-map-viewport" id="map-viewport">
+          <div class="city-map-canvas" id="city-map-container">
+            <div class="map-illustration-layer">
+              <!-- PAISAJE URBANO METROPOLITANO 2D (CIUDAD VIVA) -->
+              <svg class="city-landscape-svg" viewBox="0 0 1280 720" width="100%" height="100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Degradado de Río / Canal Urbano -->
+                  <linearGradient id="riverGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#0284c7" />
+                    <stop offset="50%" stop-color="#0369a1" />
+                    <stop offset="100%" stop-color="#075985" />
+                  </linearGradient>
+
+                  <!-- Sombra de edificios y arboledas -->
+                  <filter id="cityShadow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.6" />
+                  </filter>
+
+                  <!-- Foco de farolas urbanas -->
+                  <radialGradient id="streetGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fef08a" stop-opacity="0.3" />
+                    <stop offset="100%" stop-color="#fef08a" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+
+                <!-- 1. BASE URBANA Y MANZANAS (TERRENO DE LA CIUDAD) -->
+                <rect width="1280" height="720" fill="#0f172a" />
+
+                <!-- Zonas verdes y parques metropolitanos -->
+                <!-- Parque Norte / Terminal -->
+                <path d="M40 40 L380 40 L360 220 L40 220 Z" fill="#14532d" opacity="0.65" />
+                <!-- Parque Este / Biblioteca -->
+                <path d="M900 40 L1240 40 L1240 320 L920 300 Z" fill="#14532d" opacity="0.6" />
+                <!-- Parque Central Sur -->
+                <path d="M420 500 L860 500 L860 700 L420 700 Z" fill="#15803d" opacity="0.7" rx="16" />
+                <!-- Distrito Oeste / Museo y Lab -->
+                <path d="M40 420 L320 420 L300 680 L40 680 Z" fill="#1e293b" opacity="0.8" />
+                <!-- Distrito Comercial Este -->
+                <path d="M920 420 L1240 420 L1240 680 L940 680 Z" fill="#1e293b" opacity="0.8" />
+
+                <!-- 2. RÍO METROPOLITANO AZUL CON ONDULACIONES -->
+                <path d="M0 250 C300 240 380 320 540 460 C660 570 950 560 1280 540 L1280 620 C950 640 640 650 500 520 C340 380 260 320 0 330 Z" fill="url(#riverGrad)" />
+                <path d="M40 280 C260 270 340 340 510 490" stroke="#38bdf8" stroke-width="2" stroke-dasharray="25,15" fill="none" opacity="0.6" />
+                <path d="M560 520 C700 610 980 600 1240 570" stroke="#38bdf8" stroke-width="2" stroke-dasharray="30,20" fill="none" opacity="0.6" />
+
+                <!-- 3. RED VIAL DE AVENIDAS ASFALTADAS (CARRETERAS PRINCIPALES) -->
+                <!-- Anillo Central del Campus Escolar -->
+                <ellipse cx="640" cy="340" rx="200" ry="140" fill="none" stroke="#334155" stroke-width="48" />
+                <ellipse cx="640" cy="340" rx="200" ry="140" fill="none" stroke="#1e293b" stroke-width="44" />
+                <ellipse cx="640" cy="340" rx="200" ry="140" fill="none" stroke="#f8fafc" stroke-width="2" stroke-dasharray="12,10" opacity="0.8" />
+
+                <!-- Gran Avenida Norte-Sur (Conecta Viajes, Escuela y Parque) -->
+                <rect x="616" y="0" width="48" height="720" fill="#334155" />
+                <rect x="618" y="0" width="44" height="720" fill="#1e293b" />
+                <line x1="640" y1="0" x2="640" y2="720" stroke="#f8fafc" stroke-width="2" stroke-dasharray="14,12" opacity="0.8" />
+
+                <!-- Gran Bulevar Este-Oeste (Conecta Laboratorio, Escuela y Tienda) -->
+                <rect x="0" y="316" width="1280" height="48" fill="#334155" />
+                <rect x="0" y="318" width="1280" height="44" fill="#1e293b" />
+                <line x1="0" y1="340" x2="1280" y2="340" stroke="#f8fafc" stroke-width="2" stroke-dasharray="14,12" opacity="0.8" />
+
+                <!-- Bulevares diagonales a distritos periféricos -->
+                <line x1="240" y1="220" x2="640" y2="340" stroke="#1e293b" stroke-width="36" />
+                <line x1="1040" y1="200" x2="640" y2="340" stroke="#1e293b" stroke-width="36" />
+                <line x1="240" y1="520" x2="640" y2="340" stroke="#1e293b" stroke-width="36" />
+                <line x1="1000" y1="500" x2="640" y2="340" stroke="#1e293b" stroke-width="36" />
+
+                <!-- Puentes de Piedra y Acero sobre el Río -->
+                <rect x="360" y="306" width="70" height="68" rx="6" fill="#475569" stroke="#64748b" stroke-width="4" filter="url(#cityShadow)" />
+                <line x1="360" y1="340" x2="430" y2="340" stroke="#f8fafc" stroke-width="2" stroke-dasharray="10,8" />
+                <rect x="740" y="520" width="70" height="68" rx="6" fill="#475569" stroke="#64748b" stroke-width="4" filter="url(#cityShadow)" />
+                <line x1="740" y1="554" x2="810" y2="554" stroke="#f8fafc" stroke-width="2" stroke-dasharray="10,8" />
+
+                <!-- Pasos de Peatones (Zebra Crossings) -->
+                <g stroke="#ffffff" stroke-width="3" opacity="0.7">
+                  <!-- Cruce Norte -->
+                  <line x1="622" y1="180" x2="658" y2="180" />
+                  <line x1="622" y1="188" x2="658" y2="188" />
+                  <line x1="622" y1="196" x2="658" y2="196" />
+                  <!-- Cruce Sur -->
+                  <line x1="622" y1="480" x2="658" y2="480" />
+                  <line x1="622" y1="488" x2="658" y2="488" />
+                  <line x1="622" y1="496" x2="658" y2="496" />
+                  <!-- Cruce Oeste -->
+                  <line x1="460" y1="322" x2="460" y2="358" />
+                  <line x1="468" y1="322" x2="468" y2="358" />
+                  <line x1="476" y1="322" x2="476" y2="358" />
+                  <!-- Cruce Este -->
+                  <line x1="820" y1="322" x2="820" y2="358" />
+                  <line x1="828" y1="322" x2="828" y2="358" />
+                  <line x1="836" y1="322" x2="836" y2="358" />
+                </g>
+
+                <!-- 4. ILUSTRACIÓN DE EDIFICIOS ARQUITECTÓNICOS EMBLEMÁTICOS (8 NODOS) -->
+                <!-- Nodo Escuela Mayor (Centro 48%, 44%) -->
+                <g filter="url(#cityShadow)">
+                  <rect x="580" y="270" width="120" height="65" rx="4" fill="#1e3a8a" stroke="#fbbf24" stroke-width="2" />
+                  <polygon points="575,270 640,225 705,270" fill="#991b1b" stroke="#fbbf24" stroke-width="2" />
+                  <rect x="625" y="210" width="30" height="35" fill="#f8fafc" />
+                  <polygon points="620,210 640,185 660,210" fill="#fbbf24" />
+                  <circle cx="640" cy="225" r="7" fill="#0f172a" />
+                  <circle cx="640" cy="225" r="5" fill="#fef08a" />
+                </g>
+
+                <!-- Nodo Laboratorio de Ciencias (Oeste 20%, 32%) -->
+                <g filter="url(#cityShadow)">
+                  <rect x="200" y="180" width="110" height="60" rx="6" fill="#0369a1" stroke="#00f0ff" stroke-width="2" />
+                  <ellipse cx="230" cy="180" rx="25" ry="18" fill="#38bdf8" opacity="0.6" stroke="#00f0ff" stroke-width="2" />
+                  <ellipse cx="280" cy="180" rx="25" ry="18" fill="#38bdf8" opacity="0.6" stroke="#00f0ff" stroke-width="2" />
+                  <line x1="210" y1="195" x2="250" y2="195" stroke="#00f0ff" stroke-width="2" />
+                  <line x1="210" y1="210" x2="250" y2="210" stroke="#00f0ff" stroke-width="2" />
+                </g>
+
+                <!-- Nodo Biblioteca Central (Este 78%, 28%) -->
+                <g filter="url(#cityShadow)">
+                  <rect x="940" y="160" width="120" height="65" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2" />
+                  <polygon points="935,160 1000,120 1065,160" fill="#065f46" stroke="#34d399" stroke-width="2" />
+                  <rect x="960" y="175" width="20" height="30" rx="8" fill="#fef08a" opacity="0.8" />
+                  <rect x="1020" y="175" width="20" height="30" rx="8" fill="#fef08a" opacity="0.8" />
+                </g>
+
+                <!-- Nodo Museo Universal (Suroeste 18%, 68%) -->
+                <g filter="url(#cityShadow)">
+                  <polygon points="170,440 240,400 310,440" fill="#f8fafc" stroke="#64748b" stroke-width="3" />
+                  <rect x="180" y="440" width="120" height="60" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+                  <line x1="195" y1="440" x2="195" y2="500" stroke="#64748b" stroke-width="4" />
+                  <line x1="225" y1="440" x2="225" y2="500" stroke="#64748b" stroke-width="4" />
+                  <line x1="255" y1="440" x2="255" y2="500" stroke="#64748b" stroke-width="4" />
+                  <line x1="285" y1="440" x2="285" y2="500" stroke="#64748b" stroke-width="4" />
+                </g>
+
+                <!-- Nodo Tienda de Mates (Sureste 76%, 66%) -->
+                <g filter="url(#cityShadow)">
+                  <rect x="920" y="430" width="110" height="65" rx="4" fill="#312e81" stroke="#f59e0b" stroke-width="2" />
+                  <!-- Toldillo rayado naranja y blanco -->
+                  <polygon points="915,430 1035,430 1025,450 925,450" fill="#ea580c" />
+                  <line x1="935" y1="430" x2="935" y2="450" stroke="#ffffff" stroke-width="4" />
+                  <line x1="955" y1="430" x2="955" y2="450" stroke="#ffffff" stroke-width="4" />
+                  <line x1="975" y1="430" x2="975" y2="450" stroke="#ffffff" stroke-width="4" />
+                  <line x1="995" y1="430" x2="995" y2="450" stroke="#ffffff" stroke-width="4" />
+                  <line x1="1015" y1="430" x2="1015" y2="450" stroke="#ffffff" stroke-width="4" />
+                </g>
+
+                <!-- Nodo Centro de Viajes (Noroeste 32%, 16%) -->
+                <g filter="url(#cityShadow)">
+                  <rect x="360" y="70" width="110" height="55" rx="6" fill="#0f2942" stroke="#0284c7" stroke-width="2" />
+                  <!-- Torre de control aérea y pistas -->
+                  <rect x="395" y="45" width="22" height="25" fill="#e2e8f0" />
+                  <polygon points="390,45 406,30 422,45" fill="#0284c7" />
+                  <circle cx="406" cy="40" r="4" fill="#fef08a" />
+                  <line x1="330" y1="135" x2="470" y2="135" stroke="#f8fafc" stroke-width="3" stroke-dasharray="10,6" />
+                </g>
+
+                <!-- Nodo Arena de Retos (Noreste 64%, 16%) -->
+                <g filter="url(#cityShadow)">
+                  <ellipse cx="830" cy="90" rx="65" ry="38" fill="#18040a" stroke="#ef4444" stroke-width="3" />
+                  <ellipse cx="830" cy="90" rx="42" ry="24" fill="#3b0716" stroke="#fbbf24" stroke-width="2" />
+                  <!-- Focos hacia el cielo -->
+                  <line x1="780" y1="75" x2="750" y2="10" stroke="#00f0ff" stroke-width="3" opacity="0.7" />
+                  <line x1="880" y1="75" x2="910" y2="10" stroke="#ef4444" stroke-width="3" opacity="0.7" />
+                </g>
+
+                <!-- 5. ARBOLEDAS URBANAS Y CEREZOS EN FLOR -->
+                <!-- Cerezos Rosas (Parque Central y Avenidas) -->
+                <g opacity="0.95">
+                  <circle cx="480" cy="560" r="16" fill="#f472b6" />
+                  <circle cx="530" cy="580" r="18" fill="#fb7185" />
+                  <circle cx="580" cy="550" r="15" fill="#f472b6" />
+                  <circle cx="700" cy="580" r="17" fill="#fb7185" />
+                  <circle cx="760" cy="560" r="16" fill="#f472b6" />
+                  <circle cx="810" cy="590" r="15" fill="#fbcfe8" />
+                </g>
+                <!-- Robles Verdes Frondosos -->
+                <g opacity="0.95">
+                  <circle cx="160" cy="140" r="16" fill="#22c55e" />
+                  <circle cx="120" cy="180" r="18" fill="#15803d" />
+                  <circle cx="150" cy="220" r="16" fill="#16a34a" />
+                  <circle cx="1120" cy="130" r="18" fill="#22c55e" />
+                  <circle cx="1160" cy="170" r="20" fill="#15803d" />
+                  <circle cx="1130" cy="230" r="17" fill="#16a34a" />
+                </g>
+
+                <!-- 6. FAROLAS URBANAS CON RESPLANDOR NOCTURNO -->
+                <circle cx="590" cy="316" r="32" fill="url(#streetGlow)" />
+                <circle cx="690" cy="316" r="32" fill="url(#streetGlow)" />
+                <circle cx="590" cy="364" r="32" fill="url(#streetGlow)" />
+                <circle cx="690" cy="364" r="32" fill="url(#streetGlow)" />
+
+                <!-- 7. DRONE / DIRIGIBLE ACADÉMICO FLOTANTE (ANIMADO) -->
+                <g class="map-blimp-group animate-drift-slow">
+                  <ellipse cx="200" cy="70" rx="36" ry="16" fill="#f8fafc" stroke="#0284c7" stroke-width="2" />
+                  <rect x="185" y="84" width="28" height="8" rx="2" fill="#0f172a" />
+                  <circle cx="200" cy="88" r="2" fill="#00f0ff" />
+                  <text x="200" y="74" font-size="8" font-weight="900" fill="#0284c7" text-anchor="middle">SCHOOL CITY</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- NODO 1: ESCUELA MAYOR -->
+            <div class="map-node node-school" data-node="school" style="left: 48%; top: 44%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">🏫</div>
+                <div class="node-label">Escuela Mayor</div>
+                <div class="node-tag">Misiones & Retos</div>
+              </div>
+            </div>
+
+            <!-- NODO 2: LABORATORIO DE CIENCIAS -->
+            <div class="map-node node-lab" data-node="lab" style="left: 20%; top: 32%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">🧪</div>
+                <div class="node-label">Laboratorio</div>
+                <div class="node-tag">Ciencia & Química</div>
+              </div>
+            </div>
+
+            <!-- NODO 3: BIBLIOTECA CENTRAL -->
+            <div class="map-node node-library" data-node="library" style="left: 78%; top: 28%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">📚</div>
+                <div class="node-label">Biblioteca</div>
+                <div class="node-tag">Lengua & Lectura</div>
+              </div>
+            </div>
+
+            <!-- NODO 4: MUSEO HISTÓRICO -->
+            <div class="map-node node-museum" data-node="museum" style="left: 18%; top: 68%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">🏛️</div>
+                <div class="node-label">Museo Universal</div>
+                <div class="node-tag">Historia & Épocas</div>
+              </div>
+            </div>
+
+            <!-- NODO 5: TIENDA DE MATEMÁTICAS & FINANZAS -->
+            <div class="map-node node-shop" data-node="shop" style="left: 76%; top: 66%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">📐</div>
+                <div class="node-label">Tienda de Mates</div>
+                <div class="node-tag">Cálculo & Boosters</div>
+              </div>
+            </div>
+
+            <!-- NODO 6: PARQUE CENTRAL -->
+            <div class="map-node node-park" data-node="park" style="left: 48%; top: 76%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">🌳</div>
+                <div class="node-label">Parque Central</div>
+                <div class="node-tag">Memoria & Lógica</div>
+              </div>
+            </div>
+
+            <!-- NODO 7: CENTRO DE VIAJES -->
+            <div class="map-node node-travel" data-node="travel" style="left: 32%; top: 16%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card">
+                <div class="node-icon">🧭</div>
+                <div class="node-label">Centro de Viajes</div>
+                <div class="node-tag">Geografía & Banderas</div>
+              </div>
+            </div>
+
+            <!-- NODO 8: ARENA DE RETOS -->
+            <div class="map-node node-arena" data-node="arena" style="left: 64%; top: 16%;">
+              <div class="node-pin-pulse"></div>
+              <div class="node-card highlight-gold">
+                <div class="node-icon">⚡</div>
+                <div class="node-label">Arena de Retos</div>
+                <div class="node-tag">Torneo Contrarreloj</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOCK DE MENÚ LATERAL / INFERIOR FLOTANTE -->
+        <nav class="map-dock glass-card">
+          <button class="dock-btn" data-action="profile">
+            <span class="dock-icon">👤</span>
+            <span class="dock-label">Perfil</span>
+          </button>
+          <button class="dock-btn" data-action="inventory">
+            <span class="dock-icon">🎒</span>
+            <span class="dock-label">Mochila</span>
+          </button>
+          <button class="dock-btn" data-action="missions">
+            <span class="dock-icon">📋</span>
+            <span class="dock-label">Misiones</span>
+            <span class="badge-dot" id="dock-mission-badge"></span>
+          </button>
+          <button class="dock-btn" data-action="shop">
+            <span class="dock-icon">🛒</span>
+            <span class="dock-label">Tienda</span>
+          </button>
+          <button class="dock-btn" data-action="achievements">
+            <span class="dock-icon">🏆</span>
+            <span class="dock-label">Logros</span>
+          </button>
+          <button class="dock-btn" data-action="friends">
+            <span class="dock-icon">💬</span>
+            <span class="dock-label">Amigos</span>
+          </button>
+          <button class="dock-btn" data-action="diary">
+            <span class="dock-icon">📖</span>
+            <span class="dock-label">Diario</span>
+          </button>
+          <button class="dock-btn" data-action="settings">
+            <span class="dock-icon">⚙️</span>
+            <span class="dock-label">Ajustes</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- MODALES Y PANTALLAS SUPERPUESTAS DEL SISTEMA -->
+      <!-- ========================================== -->
+
+      <!-- MODAL: PERFIL DEL ESTUDIANTE -->
+      <div id="modal-profile" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md">
+          <div class="modal-header">
+            <h3>🎓 EXPEDIENTE DEL ESTUDIANTE</h3>
+            <button class="btn-close-modal" data-close="profile">✕</button>
+          </div>
+          <div class="modal-body profile-body">
+            <div class="profile-card">
+              <div class="profile-avatar-large" id="profile-avatar-canvas"></div>
+              <div class="profile-details">
+                <div class="profile-name-row">
+                  <h2 id="profile-name-display">Alex Vance</h2>
+                  <button id="btn-profile-edit-name" class="btn-mini">✏️ Cambiar</button>
+                </div>
+                <div class="profile-meta">
+                  <span class="profile-chip level-chip" id="profile-level-badge">Nivel 1</span>
+                  <span class="profile-chip rank-chip" id="profile-rank-badge">Explorador Escolar</span>
+                </div>
+                <div class="profile-bar-box">
+                  <label>Progreso de Experiencia</label>
+                  <div class="profile-xp-track">
+                    <div class="profile-xp-fill" id="profile-xp-fill" style="width: 25%;"></div>
+                  </div>
+                  <span class="profile-xp-sub" id="profile-xp-detail">25 / 100 XP para Nivel 2</span>
+                </div>
+                <div class="profile-stats-grid">
+                  <div class="stat-box">
+                    <span class="stat-num" id="profile-stat-missions">0</span>
+                    <span class="stat-desc">Misiones Hechas</span>
+                  </div>
+                  <div class="stat-box">
+                    <span class="stat-num" id="profile-stat-achievements">0</span>
+                    <span class="stat-desc">Logros Ganados</span>
+                  </div>
+                  <div class="stat-box">
+                    <span class="stat-num" id="profile-stat-correct">0</span>
+                    <span class="stat-desc">Aciertos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="profile-badges-section">
+              <h4>Insignias de Honor</h4>
+              <div class="badges-row" id="profile-badges-row">
+                <!-- Badges inyectadas -->
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btn-profile-customize" class="btn btn-primary">🎨 Personalizar Avatar</button>
+            <button class="btn btn-secondary" data-close="profile">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: INVENTARIO (MOCHILA) -->
+      <div id="modal-inventory" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-lg">
+          <div class="modal-header">
+            <h3>🎒 MOCHILA DE ESTUDIANTE</h3>
+            <button class="btn-close-modal" data-close="inventory">✕</button>
+          </div>
+          <div class="modal-body inventory-body">
+            <div class="inv-tabs">
+              <button class="inv-tab active" data-invcat="all">Todos</button>
+              <button class="inv-tab" data-invcat="booster">Potenciadores</button>
+              <button class="inv-tab" data-invcat="exercise_pack">Cuadernos de Mates</button>
+              <button class="inv-tab" data-invcat="cosmetic">Ropa & Accesorios</button>
+              <button class="inv-tab" data-invcat="pet">Mascotas</button>
+            </div>
+            <div class="inventory-content-grid">
+              <div class="inv-items-grid" id="inv-grid-container">
+                <!-- Items inyectados -->
+              </div>
+              <div class="inv-item-detail glass-card" id="inv-detail-panel">
+                <div class="inv-empty-hint">Selecciona un objeto para ver sus detalles</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="inv-capacity-indicator" id="inv-capacity-text">Objetos: 0</span>
+            <button class="btn btn-secondary" data-close="inventory">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: MISIONES (TABLÓN ESCOLAR) -->
+      <div id="modal-missions" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md">
+          <div class="modal-header">
+            <h3>📋 TABLÓN DE MISIONES Y TAREAS</h3>
+            <button class="btn-close-modal" data-close="missions">✕</button>
+          </div>
+          <div class="modal-body missions-body">
+            <div class="missions-filter-tabs">
+              <button class="mission-filter-btn active" data-filter="all">Todas</button>
+              <button class="mission-filter-btn" data-filter="active">En Curso</button>
+              <button class="mission-filter-btn" data-filter="completed">Completadas</button>
+            </div>
+            <div class="missions-list" id="missions-list-container">
+              <!-- Lista inyectada dinámicamente -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="missions">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: TIENDA DE MATEMÁTICAS & COMERCIO -->
+      <div id="modal-shop" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-lg">
+          <div class="modal-header shop-header">
+            <div class="shop-title-box">
+              <h3>📐 TIENDA DE MATES & BAZAR ACADÉMICO</h3>
+              <p>Madame Decimal te ofrece material escolar, consumibles de apoyo y cuadernos</p>
+            </div>
+            <div class="shop-wallet-status">
+              <div class="hud-currency-chip currency-coins"><span class="chip-icon">🪙</span><span id="shop-coins-val">1250</span></div>
+              <div class="hud-currency-chip currency-gems"><span class="chip-icon">💎</span><span id="shop-gems-val">320</span></div>
+              <button class="btn-close-modal" data-close="shop">✕</button>
+            </div>
+          </div>
+          <div class="modal-body shop-body">
+            <div class="shop-tabs">
+              <button class="shop-tab active" data-shopcat="boosters">⚡ Consumibles de Reto</button>
+              <button class="shop-tab" data-shopcat="exercise_packs">📚 Cuadernos de Cálculo</button>
+              <button class="shop-tab" data-shopcat="financial">💰 Minijuego de Cambio & %</button>
+            </div>
+            <div class="shop-grid" id="shop-grid-container">
+              <!-- Grid inyectado dinámicamente -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="shop-promo-banner">💡 Tip: ¡Resolver cuadernos comprados otorga reembolso en monedas + bonus de XP!</span>
+            <button class="btn btn-secondary" data-close="shop">Salir de la Tienda</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: LOGROS E INSIGNIAS -->
+      <div id="modal-achievements" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md">
+          <div class="modal-header">
+            <h3>🏆 SALÓN DE LOGROS E INSIGNIAS</h3>
+            <button class="btn-close-modal" data-close="achievements">✕</button>
+          </div>
+          <div class="modal-body achievements-body">
+            <div class="achievements-list" id="achievements-list-container">
+              <!-- Logros inyectados dinámicamente -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="achievements">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: AMIGOS Y CHAT -->
+      <div id="modal-friends" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-lg">
+          <div class="modal-header">
+            <h3>💬 RED DE ESTUDIANTES Y PROFESORES</h3>
+            <button class="btn-close-modal" data-close="friends">✕</button>
+          </div>
+          <div class="modal-body friends-body-layout">
+            <div class="friends-sidebar-list" id="friends-list-container">
+              <!-- Lista de PNJ/Amigos -->
+            </div>
+            <div class="friends-chat-window" id="friends-chat-container">
+              <div class="chat-placeholder">Selecciona un amigo o profesor para chatear</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="friends">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: DIARIO DE AVENTURAS -->
+      <div id="modal-diary" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md">
+          <div class="modal-header">
+            <h3>📖 DIARIO DE AVENTURAS DE SCHOOL CITY</h3>
+            <button class="btn-close-modal" data-close="diary">✕</button>
+          </div>
+          <div class="modal-body diary-body" id="diary-entries-container">
+            <!-- Entradas históricas inyectadas -->
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="diary">Cerrar Diario</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: AJUSTES GENERALES -->
+      <div id="modal-settings" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-sm">
+          <div class="modal-header">
+            <h3>⚙️ AJUSTES DEL JUEGO</h3>
+            <button class="btn-close-modal" data-close="settings">✕</button>
+          </div>
+          <div class="modal-body settings-body">
+            <div class="settings-group">
+              <label>Música BGM</label>
+              <div class="range-row">
+                <span>🔈</span>
+                <input type="range" id="setting-music-vol" min="0" max="100" value="60">
+                <span id="label-music-vol">60%</span>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label>Efectos de Sonido SFX</label>
+              <div class="range-row">
+                <span>🔊</span>
+                <input type="range" id="setting-sfx-vol" min="0" max="100" value="80">
+                <span id="label-sfx-vol">80%</span>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label>Velocidad de Texto</label>
+              <div class="range-row">
+                <span>🐢</span>
+                <input type="range" id="setting-text-speed" min="10" max="80" value="35">
+                <span>🐇</span>
+              </div>
+            </div>
+            <div class="settings-divider"></div>
+            <div class="settings-actions">
+              <button id="btn-save-manual" class="btn btn-secondary btn-block">💾 Guardar Partida Ahora</button>
+              <button id="btn-export-save" class="btn btn-tertiary btn-block">📤 Exportar Datos de Partida</button>
+              <button id="btn-reset-save" class="btn btn-danger btn-block">⚠️ Reiniciar Todo</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" data-close="settings">Aceptar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: DETALLE DE MISIÓN (Pantalla 15) -->
+      <div id="modal-mission-detail" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md">
+          <div class="modal-header">
+            <h3 id="mdet-title">Misión: Título</h3>
+            <button class="btn-close-modal" data-close="mission-detail">✕</button>
+          </div>
+          <div class="modal-body mission-detail-body">
+            <div class="mdet-giver-row">
+              <div class="mdet-avatar" id="mdet-giver-avatar">🎓</div>
+              <div class="mdet-giver-info">
+                <h4 id="mdet-giver-name">Prof. Luna</h4>
+                <p id="mdet-desc">Descripción de la tarea académica encomendada.</p>
+              </div>
+            </div>
+            <div class="mdet-objectives-box">
+              <h4>Objetivos:</h4>
+              <ul class="mdet-obj-list" id="mdet-obj-list">
+                <!-- Objetivos -->
+              </ul>
+            </div>
+            <div class="mdet-rewards-box">
+              <h4>Recompensas al completar:</h4>
+              <div class="mdet-rewards-row" id="mdet-rewards-row">
+                <!-- Recompensas -->
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btn-start-mission" class="btn btn-primary glow-effect">🚀 INICIAR MISIÓN</button>
+            <button class="btn btn-secondary" data-close="mission-detail">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: MISIÓN COMPLETADA (Pantalla 16) -->
+      <div id="modal-mission-completed" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-md celebration-card">
+          <div class="victory-confetti"></div>
+          <div class="victory-header">
+            <div class="stars-rating-container" id="victory-stars">
+              <span class="star-icon star-1 animate-star">★</span>
+              <span class="star-icon star-2 animate-star">★</span>
+              <span class="star-icon star-3 animate-star">★</span>
+            </div>
+            <h2 class="victory-title">¡MISIÓN COMPLETADA!</h2>
+            <p id="victory-mission-name">Excelente trabajo de investigación académica</p>
+          </div>
+          <div class="victory-body">
+            <div class="victory-rewards-display">
+              <div class="reward-pill animate-bounce-in" style="animation-delay: 0.2s">
+                <span class="reward-icon">⭐</span>
+                <span class="reward-val" id="victory-xp-val">+150 XP</span>
+              </div>
+              <div class="reward-pill animate-bounce-in" style="animation-delay: 0.4s">
+                <span class="reward-icon">🪙</span>
+                <span class="reward-val" id="victory-coins-val">+100 Monedas</span>
+              </div>
+              <div class="reward-pill animate-bounce-in" style="animation-delay: 0.6s" id="victory-item-pill">
+                <span class="reward-icon">🎁</span>
+                <span class="reward-val" id="victory-item-val">+1 Objeto</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer victory-footer">
+            <button id="btn-claim-rewards" class="btn btn-primary btn-large glow-effect">
+              ✨ RECLAMAR RECOMPENSAS
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- MODAL: MOTOR UNIFICADO DE MINIJUEGOS EDUCATIVOS -->
+      <!-- ========================================== -->
+      <div id="modal-minigame" class="modal-overlay">
+        <div class="modal-window glass-card animate-zoom-in modal-lg minigame-window">
+          <div class="minigame-top-bar">
+            <div class="minigame-info">
+              <span class="minigame-badge" id="mg-badge-subject">MATEMÁTICAS</span>
+              <h3 id="mg-title">Reto Académico</h3>
+            </div>
+            
+            <!-- Barra de estado y tiempo -->
+            <div class="minigame-status-chips">
+              <div class="mg-chip mg-timer-chip" id="mg-timer-box">
+                <span>⏱️</span>
+                <span id="mg-timer-val">45s</span>
+              </div>
+              <div class="mg-chip mg-score-chip">
+                <span>⭐ Puntos:</span>
+                <span id="mg-score-val">0</span>
+              </div>
+              <div class="mg-chip mg-lives-chip" id="mg-lives-box">
+                <span id="mg-lives-icons">❤️❤️❤️</span>
+              </div>
+            </div>
+
+            <!-- Botón de Boosters disponibles en reto -->
+            <div class="mg-boosters-bar" id="mg-boosters-container">
+              <!-- Botones de potenciadores disponibles -->
+            </div>
+
+            <button class="btn-close-modal" id="btn-mg-quit">✕ Salir</button>
+          </div>
+
+          <div class="minigame-interactive-stage" id="mg-stage-container">
+            <!-- Inyectado dinámicamente según el tipo de reto (Ciencias, Lengua, Mates, Historia, etc.) -->
+          </div>
+
+          <div class="minigame-bottom-bar" id="mg-bottom-container">
+            <div class="mg-feedback-msg" id="mg-feedback">¡Selecciona la respuesta correcta!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR FLOTANTE PARA TOASTS Y NOTIFICACIONES -->
+      <div id="toast-container" class="toast-stack"></div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- CARGA DE MÓDULOS JAVASCRIPT VANILLA -->
+  <!-- ========================================== -->
+  <script src="js/audio.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/characters.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/dialogue.js"></script>
+  <script src="js/choices.js"></script>
+  <script src="js/relationships.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/minigames.js"></script>
+  <script src="js/missions.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
